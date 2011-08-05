@@ -44,6 +44,7 @@ class Option(object):
 
 
 NAMESPACES = {
+    "BROKERS": Option(None, type="dict"),
     "BROKER": {
         "HOST": Option(None, type="string"),
         "PORT": Option(type="int"),
@@ -169,7 +170,7 @@ def _flatten(d, ns=""):
     acc = []
     for key, value in d.iteritems():
         if isinstance(value, dict):
-            acc.extend(_flatten(value, ns=key + '_'))
+            acc.extend(_flatten(value, ns=ns + key + '_'))
         else:
             acc.append((ns + key, value.default))
     return acc
